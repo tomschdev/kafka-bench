@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"math/rand"
-	"time"
+
 	"github.com/tomschdev/kafka-bench/src/proto/person"
 
 	"github.com/golang/protobuf/proto"
@@ -22,11 +22,11 @@ func main() {
 	// Create 10 random instances of the Person proto message and send them to Kafka.
 	for i := 0; i < 10; i++ {
 		person := &person.Person{
-			Name:   fmt.Sprintf("Person %d", i+1),
-			Height: float32(rand.Intn(100) + 150),
-			Weight: float32(rand.Intn(100) + 50),
-			Gender: randGender(),
-			Race:   randRace(),
+			Name:          fmt.Sprintf("Person %d", i+1),
+			Age:           int32(rand.Intn(50)),
+			Gender:        randGender(),
+			Race:          randRace(),
+			BiometricData: randBiometricData(),
 		}
 		message, err := proto.Marshal(person)
 		if err != nil {
@@ -45,22 +45,35 @@ func main() {
 	writer.Close()
 }
 
-func randGender() Gender {
+func randGender() person.Gender {
 	if rand.Intn(2) == 0 {
-		return Gender_FEMALE
+		return person.Gender_FEMALE
 	} else {
-		return Gender_MALE
+		return person.Gender_MALE
 	}
 }
 
-func randRace() Race {
-	races := []Race{
-		Race_WHITE,
-		Race_BLACK,
-		Race_HISPANIC,
-		Race_ASIAN,
-		Race_OTHER,
+func randBiometricData() *person.BiometricData {
+	bd := person.BiometricData{
+		Height: &person.Height{
+			Feet:   int32(rand.Intn(4) + 4),
+			Inches: int32(rand.Intn(6) + 6),
+		},
+		Weight: &person.Weight{
+			Pounds: int32(rand.Intn(100) + 100),
+		},
+	}
+	return &bd
+}
+
+func randRace() person.Race {
+	races := []person.Race{
+		person.Race_UNKNOWN_RACE,
+		person.Race_WHITE,
+		person.Race_BLACK,
+		person.Race_ASIAN,
+		person.Race_HISPANIC,
+		person.Race_NATIVE_AMERICAN,
 	}
 	return races[rand.Intn(len(races))]
 }
-

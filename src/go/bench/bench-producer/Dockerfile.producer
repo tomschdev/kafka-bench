@@ -1,9 +1,9 @@
-FROM golang:1.17-alpine
+FROM golang:1.19-alpine
 RUN apk update && apk add git
-WORKDIR /app/cmd
-COPY go.mod go.sum ./
-RUN go mod download
-COPY . .
-RUN go build -o producer ./producer.go
-CMD ["./producer"]
+COPY ./ /go/src/producer/
+WORKDIR /go/src/producer
+RUN go mod vendor
+RUN go build -o producer app/cmd/producer.go
+ENTRYPOINT ["/go/src/producer/producer"]
+
 

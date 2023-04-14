@@ -9,6 +9,7 @@ import (
 	"syscall"
 
 	"github.com/tomschdev/kafka-bench/src/proto/person"
+	"google.golang.org/protobuf/proto"
 
 	"github.com/segmentio/kafka-go"
 )
@@ -36,7 +37,7 @@ func main() {
 
 		// Unmarshal the message into a Person proto
 		var person person.Person
-		err = person.Unmarshal(msg.Value)
+		err = proto.Unmarshal(msg.Value, &person)
 		if err != nil {
 			log.Fatalf("error unmarshalling message: %v", err)
 		}
