@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  producer:
-    image: kafka-bench-producer:latest
+  consumer:
+    image: kafka-bench-consumer:latest
     environment:
       KAFKA_BROKERS: kafka:9092
-      KAFKA_TOPIC: my-topic
+      KAFKA_TOPIC: people
     depends_on:
       - kafka
     networks:

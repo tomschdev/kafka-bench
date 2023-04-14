@@ -4,6 +4,5 @@ WORKDIR /app/cmd
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN go build -o producer ./producer.go
-CMD ["./producer"]
-
+RUN go build -o consumer ./consumer.go
+CMD ["./consumer"]
