@@ -1,0 +1,39 @@
+syntax = "proto3";
+option go_package = "github.com/tomschdev/kafka-bench/src/proto/person";
+message Person {
+  string name = 1;
+  int32 age = 2;
+  Gender gender = 3;
+  Race race = 4;
+  BiometricData biometric_data = 5;
+}
+
+message BiometricData {
+  Height height = 1;
+  Weight weight = 2;
+}
+
+message Height {
+  int32 feet = 1;
+  int32 inches = 2;
+}
+
+message Weight {
+  int32 pounds = 1;
+}
+
+enum Gender {
+  UNKNOWN_GENDER = 0;
+  MALE = 1;
+  FEMALE = 2;
+}
+
+enum Race {
+  UNKNOWN_RACE = 0;
+  WHITE = 1;
+  BLACK = 2;
+  ASIAN = 3;
+  HISPANIC = 4;
+  NATIVE_AMERICAN = 5;
+}
+
